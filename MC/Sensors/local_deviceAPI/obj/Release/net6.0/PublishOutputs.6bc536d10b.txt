@@ -1,0 +1,11 @@
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\DeviceAPI.exe
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\DeviceAPI.dll
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\DeviceAPI.deps.json
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\DeviceAPI.runtimeconfig.json
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\DeviceAPI.pdb
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\PC\source\repos\DeviceAPI\DeviceAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
