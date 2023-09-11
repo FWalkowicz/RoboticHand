@@ -1,0 +1,8 @@
+{
+    "IP": "192.168.1.99:7237",
+    "SSID": "COMORE_WIFI",
+    "PASSWORD": "!Q2w3e4r",
+    "DEVICE_NAME": "test_temperatura",
+    "DEVICE_TYPE": "Thermometer",
+    "DEVICE_ID": "fac11090-1c9a-4a86-ad99-131c4f1fb91e"
+}
