@@ -1,0 +1,52 @@
+from servo import ServoCluster, Servo, servo2040, ANGULAR, CONTINUOUS
+from pimoroni import Button
+from time import sleep
+from machine import Pin
+
+clusterPins= list(range(servo2040.SERVO_1, servo2040.SERVO_3+1))
+cluster = ServoCluster(0, 0, clusterPins)
+cluster.enable_all()
+button = Pin(23, Pin.IN, Pin.PULL_UP)
+
+
+
+interruptFlag = 0
+
+
+
+def clusterControl(cluster): 
+    cluster.to_min(0)
+    cluster.to_max(1)
+    cluster.to_max(2)
+    sleep(1)
+    cluster.to_mid(0)
+    sleep(1)
+    cluster.to_max(0)
+    sleep(1)
+    cluster.to_mid(0)
+    sleep(1)
+    cluster.to_min(0)
+    cluster.to_min(1)
+    cluster.to_min(2)
+    sleep(1)
+    cluster.to_mid(0)
+    sleep(1)
+    cluster.to_max(0)
+    sleep(1)
+    cluster.to_mid(0)
+    sleep(1)
+    cluster.all_to_mid()
+    cluster.disable_all()
+
+def callback(Button):
+    global interruptFlag
+    if interruptFlag == 0:
+       interruptFlag = 1
+       print("start servo")
+       clusterControl(cluster)
+    interruptFlag = 0
+     
+
+button.irq(trigger=Pin.IRQ_FALLING, handler=callback)
+while True:
+     sleep_ms(100)

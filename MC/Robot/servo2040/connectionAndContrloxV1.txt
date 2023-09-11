@@ -1,0 +1,53 @@
+from servo import ServoCluster ,Calibration, Servo, servo2040
+from machine import Pin, I2C, mem32
+from i2cSlave import i2c_slave
+from time import sleep_ms, time, sleep
+from json import loads
+import json
+print("start")
+s_i2c = i2c_slave(0,sda=0,scl=1,slaveAddress=0x41)
+
+clusterPins= list(range(servo2040.SERVO_1, servo2040.SERVO_3+1))
+cluster = ServoCluster(0, 0, clusterPins)
+cluster.enable_all()
+
+sleep(0.2)
+dataArr = []
+print("init done")
+startTimer = time()
+dataStr = ""
+while True:
+    stopTimer = time()  
+    if stopTimer - startTimer > 0.005:
+        startTimer = stopTimer
+        dataStr = ''.join(chr(i) for i in dataArr)
+        dataArr.clear()
+        print(dataStr)
+        dataJson = json.loads(dataStr)
+
+        engine = dataJson.get("i")
+        angle = dataJson.get("k")
+        if angle == 200:
+            cluster.to_min(engine)
+        elif angle == 201:
+            cluster.to_mid(engine)
+        elif angle == 202:
+            cluster.to_max(engine)
+        else:
+            cluster.to_percent(engine, angle / 180)
+        
+        
+    """
+        if dataArr[0] == 2:
+            if dataArr[1]==1:
+                cluster.to_max(1)
+            if dataArr[1] == 0:
+                cluster.to_mid(1) 
+         
+    """
+    data = s_i2c.get()
+    dataArr.append(data)
+
+    sleep_ms(2)
+
+

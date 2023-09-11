@@ -1,0 +1,27 @@
+from servo import ServoCluster, servo2040
+from i2cSlave import i2c_slave
+from time import sleep
+s_i2c = i2c_slave(0,sda=0,scl=1,slaveAddress=0x41)
+clusterPins= list(range(servo2040.SERVO_1, servo2040.SERVO_3+1))
+cluster = ServoCluster(0, 0, clusterPins)
+cluster.enable_all()
+cluster.to_min(0)
+sleep(0.2)
+dataArr = []
+data = 0
+while True:
+    while data!=255:
+        data = s_i2c.get()
+        dataArr.append(data)
+    if len(dataArr)>0:
+       # print(dataArr)
+        data=0
+        if dataArr[2]==181:
+            cluster.to_min(dataArr[1])
+        elif dataArr[2]==182:
+            cluster.to_mid(dataArr[1])
+        elif dataArr[2]==183:
+            cluster.to_max(dataArr[1])
+        else:
+            cluster.to_percent(dataArr[1], dataArr[2]/180, load=False)
+        dataArr.clear()

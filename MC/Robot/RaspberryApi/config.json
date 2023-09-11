@@ -1,0 +1,31 @@
+[
+    {
+      "engineId": 0,
+      "name": "Lapa",
+      "type": 180,
+      "angle": 0,
+      "mode": 0
+    },
+    {
+      "engineId": 1,
+      "name": "Lokiec",
+      "type": 180,
+      "angle": 0,
+      "mode": 0
+    },
+    {
+      "engineId": 2,
+      "name": "Podstawa",
+      "type": 180,
+      "angle": 0,
+      "mode": 0
+    },
+    {
+      "engineId": 3,
+      "name": "Ramie",
+      "type": 180,
+      "angle": 0,
+      "mode": 0
+    }
+
+  ]

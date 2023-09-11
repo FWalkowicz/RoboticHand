@@ -1,0 +1,8 @@
+init
+move 1 180
+move 3 150
+move 0 60
+move 0 30
+move 0 0
+move 3 120
+move 2 0

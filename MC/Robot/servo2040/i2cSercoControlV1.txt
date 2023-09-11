@@ -1,0 +1,36 @@
+from servo import ServoCluster ,Calibration, Servo, servo2040
+from machine import Pin, I2C, mem32
+from i2cSlave import i2c_slave
+from time import sleep, time
+#import base64
+print("start")
+s_i2c = i2c_slave(0,sda=0,scl=1,slaveAddress=0x41)
+
+clusterPins= list(range(servo2040.SERVO_1, servo2040.SERVO_3+1))
+cluster = ServoCluster(0, 0, clusterPins)
+cluster.enable_all()
+
+sleep(0.2)
+#print(i2c.scan())
+#imu = MPU6050(i2c)
+dataArr = []
+print("init done")
+startTimer = time()
+while True:
+    stopTimer = time()
+    #base64String = base64.encodeBase64String(bytes)
+    if stopTimer - startTimer > 1:
+        startTimer = stopTimer
+        if dataArr[0] == 2:
+            if dataArr[1]==1:
+                cluster.to_max(1)
+            if dataArr[1] == 0:
+                cluster.to_mid(1)  
+        dataArr.clear()
+    
+
+    data = s_i2c.get()
+    dataArr.append(data)
+    print(dataArr)
+       
+    sleep(0.2)
