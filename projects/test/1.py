@@ -24,4 +24,4 @@ while True:
     
     print("Przyspieszenie X: {} | Y: {} | Z: {}".format(acceleration_x, acceleration_y, acceleration_z))
     
-    utime.sleep(1)
+    utime.sleep(10)
