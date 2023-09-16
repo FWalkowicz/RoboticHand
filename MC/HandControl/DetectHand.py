@@ -37,13 +37,9 @@ class HandDetector:
         @param image:
         @return:
         """
-        img_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        img_flip = cv2.flip(image, 1)
+        img_rgb = cv2.cvtColor(img_flip, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(img_rgb)
-
-        # draw hand landmarks
-        if self.results.multi_hand_landmarks:
-            for handLms in self.results.multi_hand_landmarks:
-                self.mpDraw.draw_landmarks(image, handLms, self.mpHands.HAND_CONNECTIONS)
 
         return image
 
@@ -54,25 +50,22 @@ class HandDetector:
         @param landmark_number:
         @return:
         """
-        lm_list = []
+        left_hand_landmarks = []
+        right_hand_landmarks = []
         if self.results.multi_hand_landmarks:
-            searching_hand = self.results.multi_hand_landmarks[landmark_number]
-            for id_lms, lm in enumerate(searching_hand.landmark):
-                h, w, c = frame.shape
-                cx, cy = int(lm.x * w), int(lm.y * h)
-                lm_list.append([id_lms, cx, cy])
-        return lm_list
+            for landmark_number, hand_landmarks in enumerate(self.results.multi_hand_landmarks):
+                hand_label = self.results.multi_handedness[landmark_number].classification[0].label
+                for id_lms, lm in enumerate(hand_landmarks.landmark):
+                    h, w, c = image.shape
+                    cx, cy = int(lm.x * w), int(lm.y * h)
+                    cx_flipped = w - cx
+                    cy_flipped = cy
+                    landmark_info = [hand_label, id_lms, cx_flipped, cy_flipped]
+
+                    if hand_label == 'Left':
+                        left_hand_landmarks.append(landmark_info)
+                    elif hand_label == 'Right':
+                        right_hand_landmarks.append(landmark_info)
+        return left_hand_landmarks, right_hand_landmarks
 
 
-if __name__ == "__main__":
-    hand = HandDetector(False, 0.5, 0.5)
-    camera = cv2.VideoCapture(0)
-    while True:
-        ret, frame = camera.read()
-        hand.find_hands(image=frame)
-        four_right = hand.find_landmark_position(frame, 0)
-        if len(four_right) != 0:
-            cv2.circle(frame, (four_right[4][1], four_right[4][2]), 5, (255, 0, 0), cv2.FILLED)
-        cv2.imshow('frame', frame)
-        if cv2.waitKey(1) == ord('q'):
-            break
