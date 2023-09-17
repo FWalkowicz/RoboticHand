@@ -60,7 +60,7 @@ class HandDetector:
                     cx, cy = int(lm.x * w), int(lm.y * h)
                     cx_flipped = w - cx
                     cy_flipped = cy
-                    landmark_info = [hand_label, id_lms, cx_flipped, cy_flipped]
+                    landmark_info = [id_lms, cx_flipped, cy_flipped]
 
                     if hand_label == 'Left':
                         left_hand_landmarks.append(landmark_info)
