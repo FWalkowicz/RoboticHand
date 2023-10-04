@@ -30,7 +30,6 @@ class HandGesture:
                 k = 224 / h
                 w_cal = math.ceil(k * w)
                 img_resize = cv2.resize(crop_image, (w_cal, 224))
-                # Resize img_resize to match the shape of img_white
                 img_resize = cv2.resize(img_resize, (img_white.shape[1], img_white.shape[0]))
                 img_white[0:img_resize.shape[0], 0:img_resize.shape[1]] = img_resize
 
@@ -44,8 +43,7 @@ class HandGesture:
 
     def predict_gesture_tensorflow_lite(self, image):
         image_prediction = self.collect_data(image)
-        image_prediction = cv2.cvtColor(image_prediction, cv2.COLOR_BGR2GRAY)
-        input_data = cv2.resize(image_prediction, (224, 224))
+        input_data = cv2.cvtColor(image_prediction, cv2.COLOR_BGR2GRAY)
         input_data_rgb = cv2.cvtColor(input_data, cv2.COLOR_GRAY2RGB)
         input_data_rgb = input_data_rgb.astype(np.float32) / 255.0
         input_data_rgb = np.expand_dims(input_data_rgb, axis=0)
@@ -71,7 +69,12 @@ class HandGesture:
         else:
             gesture_list.append(0)
 
-        for id_lm in range(1, 5):
+        if lm_list[finger_tip_id[1]][2] < lm_list[finger_tip_id[1] - 4][2]:
+            gesture_list.append(1)
+        else:
+            gesture_list.append(0)
+
+        for id_lm in range(2, 5):
             if lm_list[finger_tip_id[id_lm]][2] < lm_list[finger_tip_id[id_lm] - 2][2]:
                 gesture_list.append(1)
             else:
